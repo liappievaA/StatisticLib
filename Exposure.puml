@@ -1,0 +1,48 @@
+@startuml
+hide circle
+
+
+class TimeSeries
+
+
+class DynamicsModel
+{
+    {abstract} +simulateTrajectory(h): TimeSeries
+    {abstract} +transformToUniform(h, d, returns: TimeSeries): TimeSeries
+    {abstract} +getReturnCorrelation(h, d): Matrix
+}
+
+DynamicsModel .> TimeSeries
+
+
+class ArithmeticBrownianMotion
+{
+    +simulateTrajectory(): TimeSeries
+    +getReturnMean(observationTime: Integer, startTime: Integer, endTime: Integer): Real
+    +getReturnVariance(observationTime: Integer, startTime: Integer, endTime: Integer): Real
+    +getReturnCorrelation(observationTime: Integer, firstStartTime: Integer, firstEndTime: Integer, secondStartTime: Integer, secondEndTime: Integer): Real
+}
+
+ArithmeticBrownianMotion -up--|> DynamicsModel
+
+
+class Statistics
+{
+    {static} +create(testedModel: DynamicsModel, h, d)
+    {abstract} +getValue(observations: TimeSeries): Real
+    +plotDistribution(models: DynamicsModel[1..*])
+    +plotDiscriminatoryCurve(alternativeModel: DynamicsModel)
+}
+
+Statistics --> "testedModel" DynamicsModel
+Statistics .> TimeSeries
+
+
+class KolmogorovSmirnovStatistics
+{
+    +getValue(observations: TimeSeries): Real
+}
+
+KolmogorovSmirnovStatistics -up--|> Statistics
+
+@enduml
