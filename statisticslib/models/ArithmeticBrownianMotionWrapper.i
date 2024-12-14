@@ -1,7 +1,7 @@
-%module ArithmeticBrownianMotion
+%module ArithmeticBrownianMotionWrapper
 
 %{
-#include "ArithmeticBrownianMotion.h"
+#include "ArithmeticBrownianMotionWrapper.h"
 %}
 
-%include "ArithmeticBrownianMotion.h"
+%include "ArithmeticBrownianMotionWrapper.h"

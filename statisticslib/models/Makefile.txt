@@ -1,18 +1,16 @@
-# Список объектов
-obj = ArithmeticBrownianMotion_wrap.cxx _ArithmeticBrownianMotion.so
+obj = ArithmeticBrownianMotionWrapper_wrap.cxx _ArithmeticBrownianMotionWrapper.so
 
 .PHONY: all
 all: $(obj)
 
-# Цель для очистки
 clean:
 		rm -f *.o
 		rm -f *.so
 		rm -f *wrap*.c*
 		rm -Rf build
 
-ArithmeticBrownianMotion_wrap.cxx: ArithmeticBrownianMotion.i
-		swig -python -c++ ArithmeticBrownianMotion.i
+ArithmeticBrownianMotionWrapper_wrap.cxx: ArithmeticBrownianMotionWrapper.i
+		swig -python -c++ ArithmeticBrownianMotionWrapper.i
 
-_ArithmeticBrownianMotion.so: ArithmeticBrownianMotion_wrap.cxx ArithmeticBrownianMotion.cpp
+_ArithmeticBrownianMotionWrapper.so: ArithmeticBrownianMotionWrapper_wrap.cxx ArithmeticBrownianMotionWrapper.cpp
 		python setup.py build_ext --inplace

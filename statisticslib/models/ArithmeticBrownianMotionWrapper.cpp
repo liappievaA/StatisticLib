@@ -1,4 +1,4 @@
-#include "ArithmeticBrownianMotion.h"
+#include "ArithmeticBrownianMotionWrapper.h"
 
 ArithmeticBrownianMotion::ArithmeticBrownianMotion(double volatility, int timeStepCount)
     : volatility(volatility), timeStepCount(timeStepCount), businessDay(1.0 / 250.0) {}
