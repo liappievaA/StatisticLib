@@ -8,7 +8,7 @@ class TimeSeries
 class DynamicsModel
 {
     {abstract} +simulateTrajectory(h): TimeSeries
-    {abstract} +transformToUniform(h, d, returns: TimeSeries): TimeSeries
+    {abstract} +transformToUniform(h, d): TimeSeries
     {abstract} +getReturnCorrelation(h, d): Matrix
 }
 
@@ -17,13 +17,20 @@ DynamicsModel .> TimeSeries
 
 class ArithmeticBrownianMotion
 {
-    +simulateTrajectory(): TimeSeries
-    +getReturnMean(observationTime: Integer, startTime: Integer, endTime: Integer): Real
-    +getReturnVariance(observationTime: Integer, startTime: Integer, endTime: Integer): Real
-    +getReturnCorrelation(observationTime: Integer, firstStartTime: Integer, firstEndTime: Integer, secondStartTime: Integer, secondEndTime: Integer): Real
+    +simulateTrajectory(h): TimeSeries
+    +transformToUniform(h, d): TimeSeries
+    +getReturnCorrelation(h, d): Matrix
+}
+ArithmeticBrownianMotion -up--|> DynamicsModel
+
+class CoxIngersollRoss
+{
+    +simulateTrajectory(h): TimeSeries
+    +transformToUniform(h, d): TimeSeries
+    +getReturnCorrelation(h, d): Matrix
 }
 
-ArithmeticBrownianMotion -up--|> DynamicsModel
+CoxIngersollRoss -up--|> DynamicsModel
 
 
 class Statistics
@@ -43,6 +50,20 @@ class KolmogorovSmirnovStatistics
     +getValue(observations: TimeSeries): Real
 }
 
-KolmogorovSmirnovStatistics -up--|> Statistics
+KolmogorovSmirnovStatistics -down--|> Statistics
+
+class AndersonDarlingStatistics
+{
+    +getValue(observations: TimeSeries): Real
+}
+
+AndersonDarlingStatistics -down--|> Statistics
+
+class LikelihoodRatioStatistics
+{
+    +getValue(observations: TimeSeries): Real
+}
+
+LikelihoodRatioStatistics -down--|> Statistics
 
 @enduml
